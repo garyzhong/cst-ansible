@@ -1,0 +1,44 @@
+# lamp_playbook.yml
+
+---
+- hosts: webservers
+
+
+  tasks:
+    - name: Installing Apache
+      yum: 
+        name: httpd
+        state: present
+
+    - name: Enabling httpd service and start the service
+      service: 
+        name: httpd
+        enabled: yes
+        state: started
+
+    - name: Install MariaDB
+      yum:
+        name: 
+          - mariadb-server
+          - mariadb 
+        state: present
+
+    - name: Start the MariaDB service
+      service:
+        name: mariadb
+        enabled: yes
+        state: started
+
+
+    - name: Installing PHP
+      yum:
+        name: 
+          - php 
+          - php-mysql 
+        state: present
+
+    - name: Copy test PHP script
+      copy: src=index.php dest=/var/www/html/test.php mode=0664
+
+
+
